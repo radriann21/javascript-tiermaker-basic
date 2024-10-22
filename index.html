@@ -4,10 +4,49 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>Tiermaker</title>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div id="app"></div>
+    <main class="tier-container">
+      <div class="logo-container">
+        <img class="logo" src="https://tiermaker.com/images/tiermaker-logo.png" alt="icon">
+      </div>
+
+      <section class="tier">
+        <div class="level">
+          <aside contenteditable="true" style="--level: var(--level-s)">S</aside>
+        </div>
+        <div class="level"  style="--level: var(--level-a)">
+          <aside contenteditable="true">A</aside>
+        </div>
+        <div class="level">
+          <aside contenteditable="true" style="--level: var(--level-b)">B</aside>
+        </div>
+        <div class="level">
+          <aside contenteditable="true" style="--level: var(--level-c)">C</aside>
+        </div>
+        <div class="level">
+          <aside contenteditable="true" style="--level: var(--level-d)">D</aside>
+        </div>
+        <div class="level">
+          <aside contenteditable="true" style="--level: var(--level-e)">E</aside>
+        </div>
+        <div class="level">
+          <aside contenteditable="true" style="--level: var(--level-f)">F</aside>
+        </div>
+      </section>
+
+      <section>
+        <label>
+          <svg xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-circle-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /><path d="M9 12h6" /><path d="M12 9v6" /></svg>
+          <input id="images" accept="image/*" id="image-input" type="file" hidden>
+        </label>
+      </section>
+
+      <section id="images-selected" class="selected-images"></section>
+
+    </main>
     <script type="module" src="/main.js"></script>
   </body>
 </html>
