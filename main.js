@@ -1,8 +1,10 @@
 import { $, $$ } from "./lib/helpers"
+import html2canvas from "html2canvas-pro" 
 
 const inputImages = $('#images')
 const imageContainer = $('#images-container')
 const resetButton = $('#reset')
+const saveButton = $('#save')
 const rows = $$('.level')
 
 let sourceContainer = null
@@ -25,15 +27,8 @@ function createImg(file) {
 
 
 function createItems(evt) {
-  const files = Array.from(evt.target.files)
-
-  if (files.length > 1) {
-    files.forEach(file => {
-      createImg(file)
-    })
-  } else {
-    createImg(files[0])
-  }
+  const files = evt.dataTransfer ? Array.from(evt.dataTransfer.files) : Array.from(evt.target.files)
+  files.forEach(file => createImg(file))
 }
 
 
@@ -92,9 +87,32 @@ function handleDrop(evt) {
 function handleDragLeave(evt) {
   evt.preventDefault()
 
-  const { currentTarget } = evt
+  const { currentTarget, } = evt
   currentTarget.classList.remove('drag-over')
   currentTarget.querySelector('.prev')?.remove()
+}
+
+
+function handleDragOverFromDesktop(evt) {
+  evt.preventDefault()
+
+  const { dataTransfer, currentTarget } = evt
+
+  if (dataTransfer.types.includes('Files')) {
+    currentTarget.classList.add('over-desktop')
+  }
+}
+
+
+function handleDropFromDesktop(evt) {
+  evt.preventDefault()
+  const { currentTarget } = evt
+
+  currentTarget.classList.remove('over-desktop')
+  
+  if (dataTransfer.items && dataTransfer.items[0].kind === 'file') {
+    createItems(evt)  
+  }
 }
 
 
@@ -109,10 +127,29 @@ rows.forEach(row => {
 imageContainer.addEventListener('dragover', handleDragOver)
 imageContainer.addEventListener('drop', handleDrop)
 
+imageContainer.addEventListener('dragover', handleDragOverFromDesktop)
+imageContainer.addEventListener('drop', handleDropFromDesktop)
+
 resetButton.addEventListener('click', () => {
   const elements = $$('.level img')
   elements.forEach(element => {
     element.remove()
     imageContainer.appendChild(element)
+  })
+})
+
+saveButton.addEventListener('click', () => {
+  const tierContainer = $('.tier')
+  const canvas = document.createElement('canvas')
+  const ctx = canvas.getContext('2d')
+
+  html2canvas(tierContainer).then(canvas => {
+    ctx.drawImage(canvas, 0, 0)
+    const imgUrl = canvas.toDataURL('image/png')
+
+    const downloadLink = document.createElement('a')
+    downloadLink.download = 'tier.png'
+    downloadLink.href = imgUrl
+    downloadLink.click()
   })
 })

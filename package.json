@@ -9,6 +9,9 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^5.4.8"
+    "vite": "5.4.8"
+  },
+  "dependencies": {
+    "html2canvas-pro": "1.5.8"
   }
 }

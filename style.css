@@ -117,4 +117,8 @@ section.images-container {
     object-fit: cover;
     cursor: grab;
   }
+
+  &.over-desktop {
+    background-color: #383838;
+  }
 }
